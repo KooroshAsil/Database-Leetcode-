@@ -1,32 +1,36 @@
--- Create a sample table 
-GO
 
-DROP TABLE IF EXISTS dbo.lc180;
+/* 
+	180. Consecutive Numbers
+Find all numbers that appear at least three times consecutively.
 
-CREATE TABLE dbo.lc180 (
-	id INT,
-	num VARCHAR
-);
+Return the result table in any order.
 
-INSERT INTO dbo.lc180 (id, num) VALUES
-(1, 1),(2, 1),(3, 1),
-(4, 2),(5, 1),(6, 2),
-(7, 2);
+The result format is in the following example.
 
-SELECT * FROM dbo.lc180
----------------------------------------------------------------------------------
--- writing the query to find distinct numbers that are at leats 3 times in a row 
-GO
+ */ 
 
-WITH cte AS (
-	SELECT * ,
-		LEAD(num, 1) OVER (ORDER BY id) AS next_one,
-		LEAD(num, 2) OVER (ORDER BY id) AS nwxt_next_one
-	FROM dbo.lc180
-) 
-SELECT DISTINCT num AS ConsecutiveNums 
-FROM cte 
-WHERE num = next_one AND num = nwxt_next_one;
+CREATE TABLE Logs (
+	id INT PRIMARY KEY,
+	num VARCHAR(10)
+)
 
-GO
+INSERT INTO Logs (id, num) VALUES 
+	(1, '1'),
+	(2, '1'),
+	(3, '1'),
+	(4, '2'),
+	(5, '1')
+;
 
+SELECT * FROM Logs;
+
+SELECT DISTINCT num AS ConsecutiveNums FROM (
+	SELECT 
+		num,
+		LAG(num, 1) OVER (ORDER BY id) AS prev1,
+		LAG(num, 2) OVER (ORDER BY id) AS prev2
+	FROM 
+		Logs
+	) AS lagtablea
+WHERE num = prev1 AND prev1 = prev2
+;
