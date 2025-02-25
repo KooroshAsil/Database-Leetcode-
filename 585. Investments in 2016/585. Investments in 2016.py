@@ -1,5 +1,5 @@
 import pandas as pd
-
+"""leetcode"""
 def find_investments(insurance: pd.DataFrame) -> pd.DataFrame:
     
     duplicated_tiv_2015 = insurance[insurance.duplicated('tiv_2015', keep=False)]
