@@ -1,0 +1,6 @@
+CategoryName,HasColor,HasSize,HasWeight,HasDimensions
+Electronics,1,0,0,1
+Clothing,1,1,0,0
+Books,0,0,1,0
+Furniture,1,0,0,1
+Toys,1,0,1,0
